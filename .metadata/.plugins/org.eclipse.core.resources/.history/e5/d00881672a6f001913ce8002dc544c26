@@ -1,0 +1,141 @@
+package servico;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import dao.PersonagemDAO;
+import excecao.InfraestruturaException;
+import excecao.ObjetoNaoEncontradoException;
+import excecao.RotaNaoEncontradaException;
+import excecao.JogadorNaoEncontradoException;
+import modelo.Personagem;
+import modelo.Jogador;
+import modelo.Personagem;
+import util.FabricaDeDAOs;
+import util.JPAUtil;
+import util.Util;
+import dao.JogadorDAO;
+import dao.ProdutoDAO;
+
+public class RotaAppService {
+    private static PersonagemDAO personagemDAO = FabricaDeDAOs.getDAO(PersonagemDAO.class);
+    private static JogadorDAO frotaDAO = FabricaDeDAOs.getDAO(JogadorDAO.class);
+
+    public long inclui(Personagem umaRota)
+    	    throws JogadorNaoEncontradoException {
+
+    	try {
+    	    // NENHUMA VALIDAÇÃO ESTÁ SENDO REALIZADA AQUI!!!
+
+    	    JPAUtil.beginTransaction();
+
+    	    Jogador umaFrota = umaRota.getFrota();
+
+    	    try {
+    		frotaDAO.recuperaUmaFrotaComLock(umaFrota.getId());
+    	    } catch (ObjetoNaoEncontradoException e) {
+    		throw new JogadorNaoEncontradoException("Frota não encontada");
+    	    }
+
+    	    
+    	    long numero = personagemDAO.inclui(umaRota);
+
+    	    JPAUtil.commitTransaction();
+
+    	    return numero;
+    	} catch (JogadorNaoEncontradoException e) {
+    	    try {
+    		JPAUtil.rollbackTransaction();
+    	    } catch (InfraestruturaException ie) {
+    	    }
+
+    	    throw e;
+    	} catch (InfraestruturaException e) {
+    	    try {
+    		JPAUtil.rollbackTransaction();
+    	    } catch (InfraestruturaException ie) {
+    	    }
+
+    	    throw e;
+    	} finally {
+    	    JPAUtil.closeEntityManager();
+    	}
+        }
+
+    public void altera(Personagem umaRota) throws RotaNaoEncontradaException {
+	try {
+	    JPAUtil.beginTransaction();
+
+	    personagemDAO.altera(umaRota);
+
+	    JPAUtil.commitTransaction();
+	} catch (ObjetoNaoEncontradoException e) {
+	    JPAUtil.rollbackTransaction();
+
+	    throw new RotaNaoEncontradaException("Rota não encontrado");
+	} catch (InfraestruturaException e) {
+	    try {
+		JPAUtil.rollbackTransaction();
+	    } catch (InfraestruturaException ie) {
+	    }
+
+	    throw e;
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public void exclui(long numero) throws RotaNaoEncontradaException {
+	try {
+	    JPAUtil.beginTransaction();
+
+	    personagemDAO.exclui(numero);
+
+	    JPAUtil.commitTransaction();
+	} catch (ObjetoNaoEncontradoException e) {
+	    JPAUtil.rollbackTransaction();
+
+	    throw new RotaNaoEncontradaException("Rota não encontrado");
+	} catch (InfraestruturaException e) {
+	    try {
+		JPAUtil.rollbackTransaction();
+	    } catch (InfraestruturaException ie) {
+	    }
+
+	    throw e;
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public Personagem recuperaUmaRota(long numero) throws RotaNaoEncontradaException {
+	try {
+	    Personagem umaRota = personagemDAO.recuperaUmaRota(numero);
+
+	    return umaRota;
+	} catch (ObjetoNaoEncontradoException e) {
+	    throw new RotaNaoEncontradaException("Rota não encontrado");
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public Personagem recuperaUmaRotaEParadas(long numero) throws RotaNaoEncontradaException {
+	try {
+	    return personagemDAO.recuperaUmaRotaEParadas(numero);
+	} catch (ObjetoNaoEncontradoException e) {
+	    throw new RotaNaoEncontradaException("Rota não encontrado");
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public List<Personagem> recuperaRotasEParadas() {
+	try {
+	    return personagemDAO.recuperaRotasEParadas();
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+}

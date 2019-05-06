@@ -1,0 +1,157 @@
+import java.util.List;
+
+import corejava.Console;
+import excecao.RotaNaoEncontradaException;
+import excecao.JogadorNaoEncontradaException;
+import modelo.Rota;
+import modelo.Jogador;
+import servico.RotaAppService;
+import servico.FrotaAppService;
+import util.Util;
+
+public class PrincipalRota {
+    public static void main(String[] args) {
+	double preco;
+	String inicio;
+	String destino;
+
+	Jogador umaFrota;
+	Rota umaRota;
+
+	FrotaAppService frotaAppService = new FrotaAppService();
+	RotaAppService rotaAppService = new RotaAppService();
+
+	boolean continua = true;
+	while (continua) {
+	    System.out.println('\n' + "O que você deseja fazer?");
+	    /* ==> */ System.out.println('\n' + "1. Cadastrar uma rota de uma frota");
+	    /* ==> */ System.out.println("2. Remover uma rota");
+	    System.out.println("3. Recuperar uma rota e todas as suas paradas");
+	    System.out.println("4. Recuperar Todas as rotas e suas paradas");
+	    System.out.println("5. Sair");
+
+	    int opcao = Console.readInt('\n' + "Digite um número entre 1 e 5:");
+
+	    switch (opcao) {
+	    case 1: {
+		long idFrota = Console.readInt('\n' + "Informe o número da frota: ");
+
+		try {
+		    umaFrota = frotaAppService.recuperaUmaFrota(idFrota);
+		} catch (JogadorNaoEncontradaException e) {
+		    System.out.println('\n' + e.getMessage());
+		    break;
+		}
+
+		preco = Console.readDouble('\n' + "Informe o preço da rota: ");
+		inicio = Console.readLine("Informe a cidade de inicio da rota: ");
+		destino = Console.readLine("Informe a cidade destino da rota: ");
+
+		umaRota = new Rota(preco, inicio,destino ,umaFrota);
+
+		try
+		/* ==> */ {
+		    rotaAppService.inclui(umaRota);
+
+		    System.out.println('\n' + "Rota adicionada com sucesso");
+		} catch (JogadorNaoEncontradaException e) {
+		    System.out.println(e.getMessage());
+		}
+
+		break;
+	    }
+
+	    case 2: {
+		int resposta = Console.readInt('\n' + "Digite o número da rota que você deseja remover: ");
+
+		try {
+		    umaRota = rotaAppService.recuperaUmaRota(resposta);
+		} catch (RotaNaoEncontradaException e) {
+		    System.out.println('\n' + e.getMessage());
+		    break;
+		}
+
+		System.out.println('\n' + "Número = " + umaRota.getId() + "    Preço = " + umaRota.getPreco()
+			+ "    Cidade de inicio = " + umaRota.getInicio() + " Cidade destino= "+ umaRota.getDestino());
+
+		String resp = Console.readLine('\n' + "Confirma a remoção da rota?");
+
+		if (resp.equals("s")) {
+		    try
+		    /* ==> */ {
+			rotaAppService.exclui(umaRota.getId());
+			System.out.println('\n' + "Rota removida com sucesso!");
+		    } catch (RotaNaoEncontradaException e) {
+			System.out.println(e.getMessage());
+		    }
+		} else {
+		    System.out.println('\n' + "Rota não removida.");
+		}
+
+		break;
+	    }
+
+	    case 3: {
+	    	try {
+	    long resposta = Console.readInt('\n' + "Informe o número da frota: ");
+		umaRota = rotaAppService.recuperaUmaRotaEParadas(resposta);
+		
+		} catch (RotaNaoEncontradaException e) {
+		    System.out.println('\n' + e.getMessage());
+		    break;
+		}
+
+			System.out.println('\n' + "Número = " + umaRota.getId() + "    Preço = " + umaRota.getPreco()
+			+ "    Cidade de inicio = " + umaRota.getInicio() + " Cidade destino= "+ umaRota.getDestino());
+
+		List<Parada> paradas = umaRota.getParadas();
+
+		for (Parada parada : p) {
+		    System.out.println('\n' + "      Parada número = " + parada.getId() 
+		                            + "  Latitude = " + parada.getLatitude()
+		                            + "  Longitude  = " + parada.getLongitude()
+		    						+ " Cidade = " + parada.getCidade());
+		}
+
+		break;
+	    }
+	    
+	    
+	    case 4:{
+	    	List<Rota> rotas = rotaAppService.recuperaRotasEParadas();
+
+			if (rotas.size() != 0) {
+			    System.out.println("");
+
+			    for (Rota rota : rotas) {
+
+					System.out.println('\n' + "Número = " + umaRota.getId() + "    Preço = " + umaRota.getPreco()
+					+ "    Cidade de inicio = " + umaRota.getInicio() + " Cidade destino= "+ umaRota.getDestino());
+
+				List<Rota> paradas = rota.getParadas();
+
+				for (Parada parada : paradas) {
+				    System.out.println('\n' + "      Parada número = " + parada.getId() 
+                    + "  Latitude = " + parada.getLatitude()
+                    + "  Longitude  = " + parada.getLongitude()
+					+ " Cidade = " + parada.getCidade());
+				}
+			    }
+			} else {
+			    System.out.println('\n' + "Não há Rotas cadastradas com esta descrição.");
+			}
+
+			break;
+	    }
+
+	    case 5: {
+		continua = false;
+		break;
+	    }
+
+	    default:
+		System.out.println('\n' + "Opção inválida!");
+	    }
+	}
+    }
+}

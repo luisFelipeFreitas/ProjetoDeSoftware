@@ -1,0 +1,111 @@
+package servico;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import dao.HabilidadeDAO;
+import dao.EquipamentoDAO;
+import excecao.InfraestruturaException;
+import excecao.ObjetoNaoEncontradoException;
+import excecao.EquipamentoNaoEncontradoException;
+import excecao.HabilidadeNaoEncontradaException;
+import modelo.Habilidade;
+import modelo.Equipamento;
+import util.FabricaDeDAOs;
+import util.JPAUtil;
+import util.Util;
+
+// @Service
+public class HabilidadeAppService {
+	private static HabilidadeDAO habilidadeDAO = FabricaDeDAOs.getDAO(HabilidadeDAO.class);
+	private static EquipamentoDAO equipamentoDAO = FabricaDeDAOs.getDAO(EquipamentoDAO.class);
+
+	public long inclui(Habilidade umHabilidade) throws EquipamentoNaoEncontradoException {
+		// A execução do método recuperaUmEquipamentoComLock(id) abaixo
+		// impede que dois habilidades sejam cadastrados em paralelo.
+		// Como este método põe um lock em Equipamento, a inserção de
+		// dois habilidades acontece sempre em série, i. é, obedecendo
+		// a uma fila. Isto impede que o valor do segundo habilidade seja
+		// inferior ao valor do primeiro ou que se tente cadastrar um
+		// habilidade para um equipamento que tenha sido removido.
+		try {
+			// NENHUMA VALIDAÇÃO ESTÁ SENDO REALIZADA AQUI!!!
+
+			JPAUtil.beginTransaction();
+
+			Equipamento umEquipamento = umHabilidade.getEquipamento();
+
+			try {
+				equipamentoDAO.recuperaUmEquipamentoComLock(umEquipamento.getId());
+			} catch (ObjetoNaoEncontradoException e) {
+				throw new EquipamentoNaoEncontradoException("Equipamento não encontado");
+			}
+
+			long numero = habilidadeDAO.inclui(umHabilidade);
+
+			JPAUtil.commitTransaction();
+
+			return numero;
+		} catch (EquipamentoNaoEncontradoException e) {
+			try {
+				JPAUtil.rollbackTransaction();
+			} catch (InfraestruturaException ie) {
+			}
+
+			throw e;
+		} catch (InfraestruturaException e) {
+			try {
+				JPAUtil.rollbackTransaction();
+			} catch (InfraestruturaException ie) {
+			}
+
+			throw e;
+		} finally {
+			JPAUtil.closeEntityManager();
+		}
+	}
+
+	public void exclui(long numero) throws HabilidadeNaoEncontradaException {
+		try {
+			JPAUtil.beginTransaction();
+
+			habilidadeDAO.exclui(numero);
+
+			JPAUtil.commitTransaction();
+		} catch (ObjetoNaoEncontradoException e) {
+			JPAUtil.rollbackTransaction();
+
+			throw new HabilidadeNaoEncontradaException("Habilidade não encontrada");
+		} catch (InfraestruturaException e) {
+			try {
+				JPAUtil.rollbackTransaction();
+			} catch (InfraestruturaException ie) {
+			}
+
+			throw e;
+		} finally {
+			JPAUtil.closeEntityManager();
+		}
+	}
+
+	public Habilidade recuperaUmaHabilidade(long numero) throws HabilidadeNaoEncontradaException {
+		try {
+			Habilidade umHabilidade = habilidadeDAO.recuperaUmaHabilidade(numero);
+
+			return umHabilidade;
+		} catch (ObjetoNaoEncontradoException e) {
+			throw new HabilidadeNaoEncontradaException("Habilidade não encontrado");
+		} finally {
+			JPAUtil.closeEntityManager();
+		}
+	}
+
+	public List<Habilidade> recuperaHabilidades() {
+		try {
+			return habilidadeDAO.recuperaHabilidades();
+		} finally {
+			JPAUtil.closeEntityManager();
+		}
+	}
+}

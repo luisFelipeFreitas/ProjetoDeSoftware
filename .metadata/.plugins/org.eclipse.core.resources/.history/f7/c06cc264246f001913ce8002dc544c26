@@ -1,0 +1,13 @@
+package excecao;
+
+public class FrotaNaoEncontradaException extends Exception {
+    private final static long serialVersionUID = 1;
+
+    public FrotaNaoEncontradaException() {
+	super();
+    }
+
+    public FrotaNaoEncontradaException(String msg) {
+	super(msg);
+    }
+}

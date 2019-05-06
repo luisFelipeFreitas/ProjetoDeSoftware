@@ -1,0 +1,13 @@
+package excecao;
+
+public class RotaNaoEncontradaException extends Exception {
+    private final static long serialVersionUID = 1;
+
+    public RotaNaoEncontradaException() {
+	super();
+    }
+
+    public RotaNaoEncontradaException(String msg) {
+	super(msg);
+    }
+}

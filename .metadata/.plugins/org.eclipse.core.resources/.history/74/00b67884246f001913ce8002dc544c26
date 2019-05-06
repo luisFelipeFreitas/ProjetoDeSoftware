@@ -1,0 +1,114 @@
+package servico;
+
+import java.util.List;
+
+import dao.JogadorDAO;
+import excecao.InfraestruturaException;
+import excecao.ObjetoNaoEncontradoException;
+import excecao.JogadorNaoEncontradaException;
+import modelo.Jogador;
+import util.FabricaDeDAOs;
+import util.JPAUtil;
+
+public class FrotaAppService {
+    private static JogadorDAO frotaDAO = FabricaDeDAOs.getDAO(JogadorDAO.class);
+
+    public long inclui(Jogador umaFrota) {
+	try {
+	    // NENHUMA VALIDAÇÃO ESTÁ SENDO REALIZADA AQUI!!!
+
+	    JPAUtil.beginTransaction();
+
+	    long numero = frotaDAO.inclui(umaFrota);
+
+	    JPAUtil.commitTransaction();
+
+	    return numero;
+	} catch (InfraestruturaException e) {
+	    try {
+		JPAUtil.rollbackTransaction();
+	    } catch (InfraestruturaException ie) {
+	    }
+
+	    throw e;
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public void altera(Jogador umaFrota) throws JogadorNaoEncontradaException {
+	try {
+	    JPAUtil.beginTransaction();
+
+	    frotaDAO.altera(umaFrota);
+
+	    JPAUtil.commitTransaction();
+	} catch (ObjetoNaoEncontradoException e) {
+	    JPAUtil.rollbackTransaction();
+
+	    throw new JogadorNaoEncontradaException("Frota não encontrado");
+	} catch (InfraestruturaException e) {
+	    try {
+		JPAUtil.rollbackTransaction();
+	    } catch (InfraestruturaException ie) {
+	    }
+
+	    throw e;
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public void exclui(long numero) throws JogadorNaoEncontradaException {
+	try {
+	    JPAUtil.beginTransaction();
+
+	    frotaDAO.exclui(numero);
+
+	    JPAUtil.commitTransaction();
+	} catch (ObjetoNaoEncontradoException e) {
+	    JPAUtil.rollbackTransaction();
+
+	    throw new JogadorNaoEncontradaException("Frota não encontrado");
+	} catch (InfraestruturaException e) {
+	    try {
+		JPAUtil.rollbackTransaction();
+	    } catch (InfraestruturaException ie) {
+	    }
+
+	    throw e;
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public Jogador recuperaUmaFrota(long numero) throws JogadorNaoEncontradaException {
+	try {
+	    Jogador umaFrota = frotaDAO.recuperaUmaFrota(numero);
+
+	    return umaFrota;
+	} catch (ObjetoNaoEncontradoException e) {
+	    throw new JogadorNaoEncontradaException("Frota não encontrado");
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public Jogador recuperaUmaFrotaERotas(long numero) throws JogadorNaoEncontradaException {
+	try {
+	    return frotaDAO.recuperaUmaFrotaERotas(numero);
+	} catch (ObjetoNaoEncontradoException e) {
+	    throw new JogadorNaoEncontradaException("Frota não encontrado");
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public List<Jogador> recuperaFrotasERotas() {
+	try {
+	    return frotaDAO.recuperaFrotasERotas();
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+}

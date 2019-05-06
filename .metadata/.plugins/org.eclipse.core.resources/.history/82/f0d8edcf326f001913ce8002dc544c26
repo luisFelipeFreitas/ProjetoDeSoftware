@@ -1,0 +1,138 @@
+package servico;
+
+
+import java.util.List;
+
+import dao.EquipamentoDAO;
+import excecao.InfraestruturaException;
+import excecao.ObjetoNaoEncontradoException;
+import excecao.EquipamentoNaoEncontradaException;
+import excecao.JogadorNaoEncontradoException;
+import modelo.Equipamento;
+import modelo.Jogador;
+import util.FabricaDeDAOs;
+import util.JPAUtil;
+import dao.JogadorDAO;
+
+public class EquipamentoAppService {
+    private static EquipamentoDAO equipamentoDAO = FabricaDeDAOs.getDAO(EquipamentoDAO.class);
+    private static JogadorDAO jogadorDAO = FabricaDeDAOs.getDAO(JogadorDAO.class);
+
+    public long inclui(Equipamento umEquipamento)
+    	    throws JogadorNaoEncontradoException {
+
+    	try {
+    	    // NENHUMA VALIDAÇÃO ESTÁ SENDO REALIZADA AQUI!!!
+
+    	    JPAUtil.beginTransaction();
+
+    	    Jogador umaJogador = umEquipamento.getJogador();
+
+    	    try {
+    		jogadorDAO.recuperaUmJogadorComLock(umaJogador.getId());
+    	    } catch (ObjetoNaoEncontradoException e) {
+    		throw new JogadorNaoEncontradoException("Jogador não encontado");
+    	    }
+
+    	    
+    	    long numero = equipamentoDAO.inclui(umEquipamento);
+
+    	    JPAUtil.commitTransaction();
+
+    	    return numero;
+    	} catch (JogadorNaoEncontradoException e) {
+    	    try {
+    		JPAUtil.rollbackTransaction();
+    	    } catch (InfraestruturaException ie) {
+    	    }
+
+    	    throw e;
+    	} catch (InfraestruturaException e) {
+    	    try {
+    		JPAUtil.rollbackTransaction();
+    	    } catch (InfraestruturaException ie) {
+    	    }
+
+    	    throw e;
+    	} finally {
+    	    JPAUtil.closeEntityManager();
+    	}
+        }
+
+    public void altera(Equipamento umEquipamento) throws EquipamentoNaoEncontradaException {
+	try {
+	    JPAUtil.beginTransaction();
+
+	    equipamentoDAO.altera(umEquipamento);
+
+	    JPAUtil.commitTransaction();
+	} catch (ObjetoNaoEncontradoException e) {
+	    JPAUtil.rollbackTransaction();
+
+	    throw new EquipamentoNaoEncontradaException("Equipamento não encontrada");
+	} catch (InfraestruturaException e) {
+	    try {
+		JPAUtil.rollbackTransaction();
+	    } catch (InfraestruturaException ie) {
+	    }
+
+	    throw e;
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public void exclui(long numero) throws EquipamentoNaoEncontradaException {
+	try {
+	    JPAUtil.beginTransaction();
+
+	    equipamentoDAO.exclui(numero);
+
+	    JPAUtil.commitTransaction();
+	} catch (ObjetoNaoEncontradoException e) {
+	    JPAUtil.rollbackTransaction();
+
+	    throw new EquipamentoNaoEncontradaException("Equipamento não encontrado");
+	} catch (InfraestruturaException e) {
+	    try {
+		JPAUtil.rollbackTransaction();
+	    } catch (InfraestruturaException ie) {
+	    }
+
+	    throw e;
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public Equipamento recuperaUmEquipamento(long numero) throws EquipamentoNaoEncontradaException {
+	try {
+	    Equipamento umEquipamento = equipamentoDAO.recuperaUmEquipamento(numero);
+
+	    return umEquipamento;
+	} catch (ObjetoNaoEncontradoException e) {
+	    throw new EquipamentoNaoEncontradaException("Equipamento não encontrado");
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public Equipamento recuperaUmEquipamentoEEquipamentos(long numero) throws EquipamentoNaoEncontradaException {
+	try {
+	    return equipamentoDAO.recuperaUmEquipamentoEEquipamentos(numero);
+	}
+	catch (ObjetoNaoEncontradoException e) {
+	    throw new EquipamentoNaoEncontradaException("Equipamento não encontrada");
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+
+    public List<Equipamento> recuperaPersonagensEEquipamentos() {
+	try {
+	    return equipamentoDAO.recuperaPersonagensEEquipamentos();
+	} finally {
+	    JPAUtil.closeEntityManager();
+	}
+    }
+}

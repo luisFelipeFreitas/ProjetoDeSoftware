@@ -1,0 +1,197 @@
+
+import java.util.List;
+
+import corejava.Console;
+import excecao.JogadorNaoEncontradoException;
+import modelo.Rota;
+import modelo.Jogador;
+import servico.JogadorAppService;
+import util.Util;
+
+public class PrincipalJogador {
+    public static void main(String[] args) {
+	String username;
+	String senha;
+	String email;
+	Jogador umJogador;
+
+	JogadorAppService jogadorAppService = new JogadorAppService();
+
+	boolean continua = true;
+	while (continua) {
+	    System.out.println('\n' + "O que você deseja fazer?");
+	    System.out.println('\n' + "1. Cadastrar um jogador");
+	    System.out.println("2. Alterar uma jogador");
+	    System.out.println("3. Remover uma jogador");
+	    System.out.println("4. Listar uma jogador e suas rotas");
+	    System.out.println("5. Listar todas as jogadors e suas rotas");
+	    System.out.println("6. Sair");
+
+	    int opcao = Console.readInt('\n' + "Digite um número entre 1 e 6:");
+
+	    switch (opcao) {
+	    case 1: {
+		username = Console.readLine('\n' + "Informe o username do jogador: ");
+		senha = Console.readLine("Informe a senha do jogador: ");
+		email = Console.readLine("Informe o email do Jogador: ");
+
+		Jogador jogador = new Jogador(username, senha, email);
+
+		long numero = jogadorAppService.inclui(jogador);
+
+		System.out.println('\n' + "Jogador número " + numero + " incluído com sucesso!");
+
+		break;
+	    }
+
+	    case 2: {
+		int resposta = Console.readInt('\n' + "Digite o número do jogador que você deseja alterar: ");
+
+		try {
+		    umJogador = jogadorAppService.recuperaUmJogador(resposta);
+		    System.out.println(umJogador.getPersonagens().size());
+		} catch (JogadorNaoEncontradoException e) {
+		    System.out.println('\n' + e.getMessage());
+		    break;
+		}
+
+		System.out.println('\n' + "Número = " + umJogador.getId() + "    Username = " + umJogador.getUsername()
+			+ "    Salário = " + umJogador.getSenha());
+
+		System.out.println('\n' + "O que você deseja alterar?");
+		System.out.println('\n' + "1. Username");
+		System.out.println("2. Descrição");
+
+		int opcaoAlteracao = Console.readInt('\n' + "Digite um número de 1 a 2:");
+
+		switch (opcaoAlteracao) {
+		case 1:
+		    String novoUsername = Console.readLine("Digite o novo username: ");
+		    umJogador.setUsername(novoUsername);
+
+		    try {
+			jogadorAppService.altera(umJogador);
+
+			System.out.println('\n' + "Alteração de jogador efetuada com sucesso!");
+		    } catch (JogadorNaoEncontradoException e) {
+			System.out.println('\n' + e.getMessage());
+		    }
+
+		    break;
+
+		case 2:
+		    String novaSenha = Console.readLine("Digite a nova descrição: ");
+		    umJogador.setSenha(novaSenha);
+
+		    try {
+			jogadorAppService.altera(umJogador);
+
+			System.out.println('\n' + "Alteração de descrição efetuada " + "com sucesso!");
+		    } catch (JogadorNaoEncontradoException e) {
+			System.out.println('\n' + e.getMessage());
+		    }
+
+		    break;
+
+		default:
+		    System.out.println('\n' + "Opção inválida!");
+		}
+
+		break;
+	    }
+
+	    case 3: {
+		int resposta = Console.readInt('\n' + "Digite o número do jogador que você deseja remover: ");
+
+		try {
+		    umJogador = jogadorAppService.recuperaUmJogador(resposta);
+		} catch (JogadorNaoEncontradoException e) {
+		    System.out.println('\n' + e.getMessage());
+		    break;
+		}
+
+		System.out.println('\n' + "Número = " + umJogador.getId() + "    Username = " + umJogador.getUsername()
+			+ "    Descrição = " + umJogador.getSenha());
+
+		String resp = Console.readLine('\n' + "Confirma a remoção do jogador?");
+
+		if (resp.equals("s")) {
+		    try {
+			jogadorAppService.exclui(umJogador.getId());
+			System.out.println('\n' + "Jogador removido com sucesso!");
+		    } catch (JogadorNaoEncontradoException e) {
+			System.out.println('\n' + e.getMessage());
+		    }
+		} else {
+		    System.out.println('\n' + "Jogador não removido.");
+		}
+
+		break;
+	    }
+
+	    case 4: {
+		long numero = Console.readInt('\n' + "Informe o número do jogador: ");
+
+		try {
+		    umJogador = jogadorAppService.recuperaUmJogadorERotas(numero);
+		} catch (JogadorNaoEncontradoException e) {
+		    System.out.println('\n' + e.getMessage());
+		    break;
+		}
+
+		System.out.println('\n' + "Id = " + umJogador.getId() 
+		   + "  Username = " + umJogador.getUsername()
+		   + "  Descrição = " + umJogador.getSenha() 
+		   + "  Quantidade de Veículos"+ umJogador.getEmail());
+
+		List<Rota> rotas = umJogador.getRotas();
+
+		for (Rota rota : rotas) {
+		    System.out.println('\n' + "      Rota número = " + rota.getId() 
+		                            + "  Preço = " + rota.getPreco()
+		                            + "  Inicio  = " + rota.getInicio()
+		    						+ " Destino = " + rota.getDestino());
+		}
+
+		break;
+	    }
+
+	    case 5: {
+		List<Jogador> jogadors = jogadorAppService.recuperaJogadorsERotas();
+
+		if (jogadors.size() != 0) {
+		    System.out.println("");
+
+		    for (Jogador jogador : jogadors) {
+			System.out.println('\n' + "Jogador numero = " + jogador.getId() 
+			                        + "  Username = " + jogador.getUsername() 
+			                        + "  Descrição = " + jogador.getSenha() 
+			                        + "  Quantidade de Veículos" +jogador.getEmail());
+
+			List<Rota> rotas = jogador.getRotas();
+
+			for (Rota rota : rotas) {
+			    System.out.println('\n' + "      Rota número = " + rota.getId() 
+                + "  Preço = " + rota.getPreco()
+                + "  Inicio  = " + rota.getInicio()
+				+ " Destino = " + rota.getDestino());
+			}
+		    }
+		} else {
+		    System.out.println('\n' + "Não há jogadors cadastradas com esta descrição.");
+		}
+
+		break;
+	    }
+
+	    case 6: {
+		continua = false;
+		break;
+	    }
+
+	    default:
+		System.out.println('\n' + "Opção inválida!");
+	    }
+	}
+    }
+}

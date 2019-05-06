@@ -1,0 +1,4 @@
+ProdutoDAO=dao.impl.ProdutoDAOImpl
+LanceDAO=dao.impl.LanceDAOImpl
+JogadorDAO=dao.impl.JogadorDAOImpl
+PersonagemDAO=dao.impl.PersonagemDAOImpl

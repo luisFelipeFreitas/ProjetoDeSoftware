@@ -1,0 +1,2 @@
+ProdutoDAO=dao.impl.ProdutoDAOImpl
+LanceDAO=dao.impl.LanceDAOImpl

@@ -1,0 +1,168 @@
+package dao.impl;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
+
+import dao.FrotaDAO;
+import excecao.InfraestruturaException;
+import excecao.ObjetoNaoEncontradoException;
+import modelo.Frota;
+import util.JPAUtil;
+
+public class FrotaDAOImpl implements FrotaDAO {
+    public long inclui(Frota umaFrota) {
+	try {
+	    EntityManager em = JPAUtil.getEntityManager();
+
+	    em.persist(umaFrota);
+
+	    return umaFrota.getId();
+	} catch (RuntimeException e) {
+	    throw new InfraestruturaException(e);
+	}
+    }
+
+    public void altera(Frota umaFrota) throws ObjetoNaoEncontradoException {
+	try {
+	    EntityManager em = JPAUtil.getEntityManager();
+
+	    Frota Frota = em.find(Frota.class, umaFrota.getId(), LockModeType.PESSIMISTIC_WRITE);
+
+	    if (Frota == null) {
+		throw new ObjetoNaoEncontradoException();
+	    }
+
+	    em.merge(umaFrota);
+	} catch (RuntimeException e) {
+	    throw new InfraestruturaException(e);
+	}
+    }
+
+    public void exclui(long id) throws ObjetoNaoEncontradoException {
+	try {
+	    EntityManager em = JPAUtil.getEntityManager();
+
+	    Frota Frota = em.find(Frota.class, id, LockModeType.PESSIMISTIC_WRITE);
+
+	    if (Frota == null) {
+		throw new ObjetoNaoEncontradoException();
+	    }
+
+	    em.remove(Frota);
+	} catch (RuntimeException e) {
+	    throw new InfraestruturaException(e);
+	}
+    }
+
+    public Frota recuperaUmaFrota(long id) throws ObjetoNaoEncontradoException {
+	try {
+	    EntityManager em = JPAUtil.getEntityManager();
+
+	    Frota umaFrota = (Frota) em.find(Frota.class, new Long(id));
+	    
+
+	    if (umaFrota == null) {
+		throw new ObjetoNaoEncontradoException();
+	    }
+
+	    return umaFrota;
+	} catch (RuntimeException e) {
+	    throw new InfraestruturaException(e);
+	}
+    }
+
+    public Frota recuperaUmaFrotaComLock(long id) throws ObjetoNaoEncontradoException {
+	try {
+	    EntityManager em = JPAUtil.getEntityManager();
+
+	    Frota umaFrota = em.find(Frota.class, id, LockModeType.PESSIMISTIC_WRITE);
+
+	    if (umaFrota == null) {
+		throw new ObjetoNaoEncontradoException();
+	    }
+
+	    return umaFrota;
+	} catch (RuntimeException e) {
+	    throw new InfraestruturaException(e);
+	}
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Frota> recuperaFrotas() {
+	try {
+	    EntityManager em = JPAUtil.getEntityManager();
+
+	    List<Frota> frotas = em.createQuery("select f from frota f " + "order by f.id asc").getResultList();
+
+	    return frotas;
+	} catch (RuntimeException e) {
+	    throw new InfraestruturaException(e);
+	}
+    }
+
+    public Frota recuperaUmaFrotaERotas(long numero) throws ObjetoNaoEncontradoException {
+	/*
+	 * O que a maioria das pessoas pensam quando escutam a palavra join no contexto
+	 * de bancos de dados SQL é um inner join. Um inner join é o tipo de join mais
+	 * simples.
+	 *
+	 * Por exemplo, para se recuperar todos os Frotas que possuem lances, é
+	 * preciso utilizar um inner join. Neste caso apenas Frotas que possuem lances
+	 * são recuperados. Mas se desejarmos recuperar os Frotas e valores nulos para
+	 * os dados dos lances quando o Frota não tiver lances, neste caso
+	 * utilizaremos um left outer join. (estilo ANSI).
+	 *
+	 * Se fizermos a junção de duas tabelas Frota e LANCE, utilizando um inner
+	 * join obteremos todos os Frotas e seus lances na tabela resultante. No caso
+	 * de um "left outer join", cada linha da tabela a esquerda (left - tabela
+	 * Frota) que nunca satisfaz a condição de junção também é incluída no
+	 * resultado com valores nulos retornados para todas as colunas da tabela LANCE.
+	 * 
+	 * Um "right outer join" recuperaria todos os lances com um valor nulo para o
+	 * Frota se o lance não tem relação com nenhum Frota.
+	 * 
+	 * A condição de join deve ser especificada na cláusula "on" para uma junção no
+	 * estilo "ANSI" ou na cláusula "where" para uma junção no estilo "theta".
+	 * 
+	 * Exemplo: P.ID = L.Frota_ID.
+	 *
+	 * Left Outer Join no Oracle:
+	 *
+	 * SELECT P.ID, P.NOME, L.ID, L.VALOR FROM Frota P, LANCE L 
+	 * WHERE P.ID = L.Frota_ID(+) ORDER BY P.ID, L.VALOR;
+	 */
+	try {
+	    EntityManager em = JPAUtil.getEntityManager();
+
+	    String busca = "select f from frota f left outer join fetch f.rotas where f.id = :id";
+
+	    Frota umaFrota = (Frota) em.createQuery(busca).setParameter("id", numero).getSingleResult();
+
+	    // A busca retorna um único Frota (SingleResult()).
+
+	    /*
+	     * Em função do método getSingleResult() será propagada a exceção
+	     * NoResultException caso nenhum Frota seja encontrado.
+	     */
+
+	    return umaFrota;
+	} catch (NoResultException e) {
+	    throw new ObjetoNaoEncontradoException();
+	}
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Frota> recuperaFrotasERotas() {
+
+	EntityManager em = JPAUtil.getEntityManager();
+
+	List<Frota> frotas = em
+		.createQuery("select distinct f from frota p left outer join fetch f.lances")
+		.getResultList();
+
+	return frotas;
+    }
+}

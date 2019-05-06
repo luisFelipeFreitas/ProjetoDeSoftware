@@ -26,11 +26,10 @@ public class PrincipalPersonagem {
 		while (continua) {
 			System.out.println('\n' + "O que você deseja fazer?");
 			/* ==> */ System.out.println('\n' + "1. Cadastrar uma personagem de um jogador");
-			System.out.println("\n2. Alterar um personagem");
-			/* ==> */ System.out.println("3. Remover um personagem");
-			System.out.println("4. Recuperar uma personagem e todos os seus equipamentos");
-			System.out.println("5. Recuperar Todas as personagens e seus equipamentos");
-			System.out.println("6. Sair");
+			/* ==> */ System.out.println("2. Remover um personagem");
+			System.out.println("3. Recuperar uma personagem e todos os seus equipamentos");
+			System.out.println("4. Recuperar Todas as personagens e seus equipamentos");
+			System.out.println("5. Sair");
 
 			int opcao = Console.readInt('\n' + "Digite um número entre 1 e 5:");
 
@@ -62,64 +61,8 @@ public class PrincipalPersonagem {
 
 				break;
 			}
+
 			case 2: {
-				int resposta = Console.readInt('\n' + "Digite o número do personagem que você deseja alterar: ");
-
-				try {
-					umaPersonagem = personagemAppService.recuperaUmaPersonagem(resposta);
-					
-				} catch (PersonagemNaoEncontradaException e) {
-					System.out.println('\n' + e.getMessage());
-					break;
-				}
-
-				System.out
-						.println('\n' + "Número = " + umaPersonagem.getId() + "    nome = " + umaPersonagem.getNome()+"  sexo = "+ umaPersonagem.getSexo()+"   classe= "+umaPersonagem.getClasse());
-
-				System.out.println('\n' + "O que você deseja alterar?");
-				System.out.println('\n' + "1. Nome");
-				System.out.println("\n2. Classe");
-
-				int opcaoAlteracao = Console.readInt('\n' + "Digite um número de 1 a 2:");
-
-				switch (opcaoAlteracao) {
-				case 1:
-					String nomeChar = Console.readLine("Digite o novo Nome: ");
-					umaPersonagem.setNome(nomeChar);
-
-					try {
-						personagemAppService.altera(umaPersonagem);
-
-						System.out.println('\n' + "Alteração de personagem efetuada com sucesso!");
-					} catch (PersonagemNaoEncontradaException e) {
-						System.out.println('\n' + e.getMessage());
-					}
-
-					break;
-
-				case 2:
-					String classeChar = Console.readLine("Digite a nova classe: ");
-					umaPersonagem.setClasse(classeChar);
-
-					try {
-						personagemAppService.altera(umaPersonagem);
-
-						System.out.println('\n' + "Alteração de descrição efetuada " + "com sucesso!");
-					} catch (PersonagemNaoEncontradaException e) {
-						System.out.println('\n' + e.getMessage());
-					}
-
-					break;
-
-				default:
-					System.out.println('\n' + "Opção inválida!");
-				}
-
-				break;
-			}
-
-
-			case 3: {
 				int resposta = Console.readInt('\n' + "Digite o número da personagem que você deseja remover: ");
 
 				try {
@@ -149,7 +92,7 @@ public class PrincipalPersonagem {
 				break;
 			}
 
-			case 4: {
+			case 3: {
 				try {
 					long resposta = Console.readInt('\n' + "Informe o número da Personagem: ");
 					umaPersonagem = personagemAppService.recuperaUmaPersonagemEEquipamentos(resposta);
@@ -173,7 +116,7 @@ public class PrincipalPersonagem {
 				break;
 			}
 
-			case 5: {
+			case 4: {
 				List<Personagem> personagems = personagemAppService.recuperaPersonagensEEquipamentos();
 
 				if (personagems.size() != 0) {
@@ -199,7 +142,7 @@ public class PrincipalPersonagem {
 				break;
 			}
 
-			case 6: {
+			case 5: {
 				continua = false;
 				break;
 			}

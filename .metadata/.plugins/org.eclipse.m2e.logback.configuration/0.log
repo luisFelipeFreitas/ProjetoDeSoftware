@@ -982,3 +982,13 @@
 2019-05-05 12:47:40,627 [Worker-77: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 3 resources
 2019-05-05 12:47:40,627 [Worker-77: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'ISO-8859-1' encoding to copy filtered resources.
 2019-05-05 12:47:40,627 [Worker-77: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\luisf\eclipse\Exercicio06-AppService-Produto-Lance-incompleto\src\test\resources
+2019-05-06 08:21:17,153 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2019-05-06 08:21:20,051 [Worker-5: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for corejava:console:jar:1.0 is missing, no dependency information available
+2019-05-06 08:21:21,155 [Worker-5: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'ISO-8859-1' encoding to copy filtered resources.
+2019-05-06 08:21:21,171 [Worker-5: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 3 resources
+2019-05-06 08:21:21,196 [Worker-5: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'ISO-8859-1' encoding to copy filtered resources.
+2019-05-06 08:21:21,197 [Worker-5: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\luisf\eclipse\Exercicio06-AppService-Produto-Lance-incompleto\src\test\resources
+2019-05-06 08:52:48,279 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'ISO-8859-1' encoding to copy filtered resources.
+2019-05-06 08:52:48,296 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 3 resources
+2019-05-06 08:52:48,300 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'ISO-8859-1' encoding to copy filtered resources.
+2019-05-06 08:52:48,300 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\luisf\eclipse\Exercicio06-AppService-Produto-Lance-incompleto\src\test\resources

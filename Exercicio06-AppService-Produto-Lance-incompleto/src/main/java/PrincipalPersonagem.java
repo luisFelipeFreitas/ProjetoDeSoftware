@@ -32,7 +32,7 @@ public class PrincipalPersonagem {
 			System.out.println("5. Recuperar Todas as personagens e seus equipamentos");
 			System.out.println("6. Sair");
 
-			int opcao = Console.readInt('\n' + "Digite um número entre 1 e 5:");
+			int opcao = Console.readInt('\n' + "Digite um número entre 1 e 6:");
 
 			switch (opcao) {
 			case 1: {

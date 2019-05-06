@@ -743,3 +743,6 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-05-06 10:28:00.015
 !MESSAGE No repository found at http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/dev/aspectj-DEVELOPMENT-201901140838.jar.
+
+!ENTRY org.eclipse.jface.text 2 0 2019-05-06 10:54:57.403
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.boolean'

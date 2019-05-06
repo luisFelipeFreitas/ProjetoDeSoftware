@@ -57,7 +57,7 @@ public class Habilidade {
     }
     @Column(name = "nome")
     public String getNome() {
-	return efeito;
+	return nome;
     }
 
     

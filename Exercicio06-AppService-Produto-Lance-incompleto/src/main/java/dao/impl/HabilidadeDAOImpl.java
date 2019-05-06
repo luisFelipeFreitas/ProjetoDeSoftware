@@ -9,13 +9,14 @@ import dao.HabilidadeDAO;
 import excecao.InfraestruturaException;
 import excecao.ObjetoNaoEncontradoException;
 import modelo.Habilidade;
-
+import modelo.Personagem;
 import util.JPAUtil;
 
 public class HabilidadeDAOImpl implements HabilidadeDAO {
 	public long inclui(Habilidade umaHabilidade) {
 		try {
 			EntityManager em = JPAUtil.getEntityManager();
+			
 
 			em.persist(umaHabilidade);
 
@@ -36,6 +37,21 @@ public class HabilidadeDAOImpl implements HabilidadeDAO {
 			}
 
 			em.remove(lance);
+		} catch (RuntimeException e) {
+			throw new InfraestruturaException(e);
+		}
+	}
+	public void altera(Habilidade umaHabilidade) throws ObjetoNaoEncontradoException {
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+
+			Habilidade habilidade = em.find(Habilidade.class, umaHabilidade.getId(), LockModeType.PESSIMISTIC_WRITE);
+
+			if (habilidade == null) {
+				throw new ObjetoNaoEncontradoException();
+			}
+
+			em.merge(umaHabilidade);
 		} catch (RuntimeException e) {
 			throw new InfraestruturaException(e);
 		}

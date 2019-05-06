@@ -23,11 +23,12 @@ public class PrincipalHabilidade {
 		while (continua) {
 			System.out.println('\n' + "O que você deseja fazer?");
 			/* ==> */ System.out.println('\n' + "1. Cadastrar uma habilidade de um equipamento");
-			/* ==> */ System.out.println("2. Remover uma habilidade");
-			System.out.println("3. Recuperar todas as habilidades");
-			System.out.println("4. Sair");
+			System.out.println("2. Alterar uma habilidade");
+			/* ==> */ System.out.println("3. Remover uma habilidade");
+			System.out.println("4. Recuperar todas as habilidades");
+			System.out.println("5. Sair");
 
-			int opcao = Console.readInt('\n' + "Digite um número entre 1 e 4:");
+			int opcao = Console.readInt('\n' + "Digite um número entre 1 e 5:");
 
 			switch (opcao) {
 			case 1: {
@@ -45,6 +46,7 @@ public class PrincipalHabilidade {
 				efeito = Console.readLine("Informe o efeito da habilidade ");
 
 				umaHabilidade = new Habilidade(cooldown, nome, efeito, umEquipamento);
+				
 
 				try
 				/* ==> */ {
@@ -57,8 +59,76 @@ public class PrincipalHabilidade {
 
 				break;
 			}
-
 			case 2: {
+				int resposta = Console.readInt('\n' + "Digite o número da habilidade que você deseja alterar: ");
+
+				try {
+					umaHabilidade = habilidadeAppService.recuperaUmaHabilidade(resposta);
+
+				} catch (HabilidadeNaoEncontradaException e) {
+					System.out.println('\n' + e.getMessage());
+					break;
+				}
+
+				System.out.println('\n' + "Número = " + umaHabilidade.getId() + "    nome = " + umaHabilidade.getNome()
+						+ "  Cooldown = " + umaHabilidade.getCooldown() + "   Efeito= " + umaHabilidade.getEfeito());
+
+				System.out.println('\n' + "O que você deseja alterar?");
+				System.out.println('\n' + "1. Nome");
+				System.out.println("\n2. Cooldown");
+				System.out.println("\n3. Efeito");
+
+				int opcaoAlteracao = Console.readInt('\n' + "Digite um número de 1 a 3:");
+
+				switch (opcaoAlteracao) {
+				case 1:
+					String nomeHab = Console.readLine("Digite o novo Nome: ");
+					umaHabilidade.setNome(nomeHab);
+
+					try {
+						habilidadeAppService.altera(umaHabilidade);
+
+						System.out.println('\n' + "Alteração de equipamento efetuada com sucesso!");
+					} catch (HabilidadeNaoEncontradaException e) {
+						System.out.println('\n' + e.getMessage());
+					}
+
+					break;
+
+				case 2:
+					double cooldownHab = Console.readDouble("Digite o novo Cooldown: ");
+					umaHabilidade.setCooldown(cooldownHab);
+
+					try {
+						habilidadeAppService.altera(umaHabilidade);
+
+						System.out.println('\n' + "Alteração de equipamento efetuada com sucesso!");
+					} catch (HabilidadeNaoEncontradaException e) {
+						System.out.println('\n' + e.getMessage());
+					}
+
+					break;
+				case 3:
+					String efeitoHab = Console.readLine("Digite o novo Efeito: ");
+					umaHabilidade.setEfeito(efeitoHab);
+
+					try {
+						habilidadeAppService.altera(umaHabilidade);
+
+						System.out.println('\n' + "Alteração de equipamento efetuada com sucesso!");
+					} catch (HabilidadeNaoEncontradaException e) {
+						System.out.println('\n' + e.getMessage());
+					}
+
+					break;
+				default:
+					System.out.println('\n' + "Opção inválida!");
+				}
+
+				break;
+			}
+
+			case 3: {
 				int resposta = Console.readInt('\n' + "Digite o número da habilidade que você deseja remover: ");
 
 				try {
@@ -68,9 +138,9 @@ public class PrincipalHabilidade {
 					break;
 				}
 
-				System.out.println('\n' + "Número = " + umaHabilidade.getId() + "    Cooldown = "
-						+ umaHabilidade.getCooldown() + "    Nome: = " + umaHabilidade.getNome() + "  Efeito: "
-						+ umaHabilidade.getEfeito());
+				System.out.println(
+						'\n' + "Número = " + umaHabilidade.getId() + "    Cooldown = " + umaHabilidade.getCooldown()
+								+ "    Nome: = " + umaHabilidade.getNome() + "  Efeito: " + umaHabilidade.getEfeito());
 
 				String resp = Console.readLine('\n' + "Confirma a remoção da habilidade?");
 
@@ -89,7 +159,7 @@ public class PrincipalHabilidade {
 				break;
 			}
 
-			case 3: {
+			case 4: {
 				List<Habilidade> arrayHabilidades = habilidadeAppService.recuperaHabilidades();
 
 				if (arrayHabilidades.size() == 0) {
@@ -99,15 +169,15 @@ public class PrincipalHabilidade {
 
 				System.out.println("");
 				for (Habilidade habilidade : arrayHabilidades) {
-					System.out.println('\n' + "Número = " + habilidade.getId() + "    Cooldown = "
-							+ habilidade.getCooldown() + "    Nome: = " + habilidade.getNome() + "  Efeito: "
-							+ habilidade.getEfeito());
+					System.out.println(
+							'\n' + "Número = " + habilidade.getId() + "    Cooldown = " + habilidade.getCooldown()
+									+ "    Nome: = " + habilidade.getNome() + "  Efeito: " + habilidade.getEfeito());
 				}
 
 				break;
 			}
 
-			case 4: {
+			case 5: {
 				continua = false;
 				break;
 			}

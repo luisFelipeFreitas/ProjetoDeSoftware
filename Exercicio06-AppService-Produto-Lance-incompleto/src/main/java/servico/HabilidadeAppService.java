@@ -4,10 +4,12 @@ import java.util.List;
 import dao.HabilidadeDAO;
 import dao.EquipamentoDAO;
 import excecao.InfraestruturaException;
+import excecao.JogadorNaoEncontradoException;
 import excecao.ObjetoNaoEncontradoException;
 import excecao.EquipamentoNaoEncontradoException;
 import excecao.HabilidadeNaoEncontradaException;
 import modelo.Habilidade;
+import modelo.Jogador;
 import modelo.Equipamento;
 import util.FabricaDeDAOs;
 import util.JPAUtil;
@@ -84,6 +86,29 @@ public class HabilidadeAppService {
 			JPAUtil.closeEntityManager();
 		}
 	}
+	public void altera(Habilidade umaHabilidade) throws HabilidadeNaoEncontradaException {
+		try {
+			JPAUtil.beginTransaction();
+
+			habilidadeDAO.altera(umaHabilidade);
+
+			JPAUtil.commitTransaction();
+		} catch (ObjetoNaoEncontradoException e) {
+			JPAUtil.rollbackTransaction();
+
+			throw new HabilidadeNaoEncontradaException("Habilidade não encontrada");
+		} catch (InfraestruturaException e) {
+			try {
+				JPAUtil.rollbackTransaction();
+			} catch (InfraestruturaException ie) {
+			}
+
+			throw e;
+		} finally {
+			JPAUtil.closeEntityManager();
+		}
+	}
+
 
 	public Habilidade recuperaUmaHabilidade(long numero) throws HabilidadeNaoEncontradaException {
 		try {

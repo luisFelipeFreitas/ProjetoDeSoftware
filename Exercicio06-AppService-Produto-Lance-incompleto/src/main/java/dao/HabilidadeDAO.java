@@ -14,5 +14,7 @@ public interface HabilidadeDAO {
     Habilidade recuperaUmaHabilidade(long numero) throws ObjetoNaoEncontradoException;
 
     List<Habilidade> recuperaHabilidades();
+    
+    void altera(Habilidade umaHabilidade) throws ObjetoNaoEncontradoException;
 
 }

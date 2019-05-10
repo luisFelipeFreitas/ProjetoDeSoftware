@@ -2,4 +2,5 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="excecao.FrotaNaoEncontradaException"/>
 <fullyQualifiedTypeName name="dao.FrotaDAO"/>
+<fullyQualifiedTypeName name="servico.controle.FabricaDeServico"/>
 </qualifiedTypeNameHistroy>

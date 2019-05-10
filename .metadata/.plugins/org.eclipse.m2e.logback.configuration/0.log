@@ -1274,3 +1274,7 @@
 2019-05-10 11:58:07,235 [Worker-49: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
 2019-05-10 11:58:07,235 [Worker-49: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'ISO-8859-1' encoding to copy filtered resources.
 2019-05-10 11:58:07,235 [Worker-49: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\luisf\eclipse\Exercicio07-AppService-com-Proxy-Incompleto\src\test\resources
+2019-05-10 12:12:20,777 [Worker-43: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'ISO-8859-1' encoding to copy filtered resources.
+2019-05-10 12:12:20,777 [Worker-43: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2019-05-10 12:12:20,777 [Worker-43: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'ISO-8859-1' encoding to copy filtered resources.
+2019-05-10 12:12:20,777 [Worker-43: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\luisf\eclipse\Exercicio07-AppService-com-Proxy-Incompleto\src\test\resources

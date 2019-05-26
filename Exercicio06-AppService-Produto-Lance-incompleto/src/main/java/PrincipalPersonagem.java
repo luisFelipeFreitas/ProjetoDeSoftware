@@ -1,14 +1,16 @@
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import corejava.Console;
-import excecao.PersonagemNaoEncontradaException;
 import excecao.JogadorNaoEncontradoException;
-import modelo.Personagem;
-import modelo.Jogador;
+import excecao.PersonagemNaoEncontradaException;
 import modelo.Equipamento;
-import servico.PersonagemAppService;
-import servico.JogadorAppService;
-import util.Util;
+import modelo.Jogador;
+import modelo.Personagem;
+import service.JogadorAppService;
+import service.PersonagemAppService;
 
 public class PrincipalPersonagem {
 	public static void main(String[] args) {
@@ -19,8 +21,11 @@ public class PrincipalPersonagem {
 		Jogador umJogador;
 		Personagem umaPersonagem;
 
-		JogadorAppService jogadorAppService = new JogadorAppService();
-		PersonagemAppService personagemAppService = new PersonagemAppService();
+		@SuppressWarnings("resource")
+		ApplicationContext fabrica = new ClassPathXmlApplicationContext("beans-jpa.xml");
+		JogadorAppService jogadorAppService = (JogadorAppService)fabrica.getBean ("jogadorAppService");
+		PersonagemAppService personagemAppService = (PersonagemAppService)fabrica.getBean ("personagemAppService");
+		
 
 		boolean continua = true;
 		while (continua) {

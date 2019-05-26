@@ -1,12 +1,14 @@
 
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import corejava.Console;
 import excecao.JogadorNaoEncontradoException;
-import modelo.Personagem;
 import modelo.Jogador;
-import servico.JogadorAppService;
-import util.Util;
+import modelo.Personagem;
+import service.JogadorAppService;
 
 public class PrincipalJogador {
 	public static void main(String[] args) {
@@ -15,7 +17,9 @@ public class PrincipalJogador {
 		String email;
 		Jogador umJogador;
 
-		JogadorAppService jogadorAppService = new JogadorAppService();
+		@SuppressWarnings("resource")
+		ApplicationContext fabrica = new ClassPathXmlApplicationContext("beans-jpa.xml");
+		JogadorAppService jogadorAppService = (JogadorAppService)fabrica.getBean ("jogadorAppService");
 
 		boolean continua = true;
 		while (continua) {

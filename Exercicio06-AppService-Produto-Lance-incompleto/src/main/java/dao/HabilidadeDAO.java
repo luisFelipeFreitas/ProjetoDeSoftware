@@ -2,9 +2,8 @@ package dao;
 
 import java.util.List;
 
-import modelo.Habilidade;
-import modelo.Produto;
 import excecao.ObjetoNaoEncontradoException;
+import modelo.Habilidade;
 
 public interface HabilidadeDAO {
     long inclui(Habilidade umaHabilidade);

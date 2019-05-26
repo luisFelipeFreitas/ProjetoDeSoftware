@@ -3,4 +3,11 @@
 <fullyQualifiedTypeName name="excecao.FrotaNaoEncontradaException"/>
 <fullyQualifiedTypeName name="dao.FrotaDAO"/>
 <fullyQualifiedTypeName name="servico.controle.FabricaDeServico"/>
+<fullyQualifiedTypeName name="java.lang.annotation.ElementType"/>
+<fullyQualifiedTypeName name="anotacao.Transactional"/>
+<fullyQualifiedTypeName name="servico.controle.JPAUtil"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Field"/>
+<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+<fullyQualifiedTypeName name="dao.impl.JPADaoGenerico"/>
+<fullyQualifiedTypeName name="service.JogadorAppService"/>
 </qualifiedTypeNameHistroy>

@@ -1,12 +1,15 @@
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import corejava.Console;
 import excecao.EquipamentoNaoEncontradoException;
 import excecao.HabilidadeNaoEncontradaException;
-import modelo.Habilidade;
 import modelo.Equipamento;
-import servico.HabilidadeAppService;
-import servico.EquipamentoAppService;
+import modelo.Habilidade;
+import service.EquipamentoAppService;
+import service.HabilidadeAppService;
 
 public class PrincipalHabilidade {
 	public static void main(String[] args) {
@@ -15,9 +18,13 @@ public class PrincipalHabilidade {
 		double cooldown;
 		Equipamento umEquipamento;
 		Habilidade umaHabilidade;
-
-		EquipamentoAppService equipamentoAppService = new EquipamentoAppService();
-		HabilidadeAppService habilidadeAppService = new HabilidadeAppService();
+		
+		
+		@SuppressWarnings("resource")
+		ApplicationContext fabrica = new ClassPathXmlApplicationContext("beans-jpa.xml");
+		EquipamentoAppService equipamentoAppService = (EquipamentoAppService)fabrica.getBean ("equipamentoAppService");
+		HabilidadeAppService habilidadeAppService = (HabilidadeAppService)fabrica.getBean("habilidadeAppService");
+	
 
 		boolean continua = true;
 		while (continua) {

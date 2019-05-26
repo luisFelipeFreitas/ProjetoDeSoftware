@@ -7,8 +7,8 @@ import excecao.ProdutoNaoEncontradoException;
 import excecao.ValorDeLanceInvalidoException;
 import modelo.Lance;
 import modelo.Produto;
-import servico.LanceAppService;
-import servico.ProdutoAppService;
+import servico.impl.LanceAppService;
+import servico.impl.ProdutoAppService;
 import util.Util;
 
 public class PrincipalLance {

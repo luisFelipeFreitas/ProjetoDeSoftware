@@ -5,124 +5,93 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
 
 import dao.EquipamentoDAO;
-import excecao.InfraestruturaException;
 import excecao.ObjetoNaoEncontradoException;
 import modelo.Equipamento;
-import util.JPAUtil;
 
+@Repository
 public class EquipamentoDAOImpl implements EquipamentoDAO {
-    public long inclui(Equipamento umEquipamento) {
-	try {
-	    EntityManager em = JPAUtil.getEntityManager();
+	@PersistenceContext
+	protected EntityManager em;
 
-	    em.persist(umEquipamento);
+	public long inclui(Equipamento umEquipamento) {
+		em.persist(umEquipamento);
 
-	    return umEquipamento.getId();
-	} catch (RuntimeException e) {
-	    throw new InfraestruturaException(e);
+		return umEquipamento.getId();
+
 	}
-    }
-    
-    public void altera(Equipamento umEquipamento) throws ObjetoNaoEncontradoException {
-	try {
-	    EntityManager em = JPAUtil.getEntityManager();
 
-	    Equipamento equipamento = em.find(Equipamento.class, umEquipamento.getId(), LockModeType.PESSIMISTIC_WRITE);
+	public void altera(Equipamento umEquipamento) throws ObjetoNaoEncontradoException {
+		Equipamento equipamento = em.find(Equipamento.class, umEquipamento.getId(), LockModeType.PESSIMISTIC_WRITE);
 
-	    if (equipamento == null) {
-		throw new ObjetoNaoEncontradoException();
-	    }
+		if (equipamento == null) {
+			throw new ObjetoNaoEncontradoException();
+		}
 
-	    em.merge(umEquipamento);
-	} catch (RuntimeException e) {
-	    throw new InfraestruturaException(e);
+		em.merge(umEquipamento);
+
 	}
-    }
 
-    public void exclui(long id) throws ObjetoNaoEncontradoException {
-	try {
-	    EntityManager em = JPAUtil.getEntityManager();
+	public void exclui(long id) throws ObjetoNaoEncontradoException {
+		Equipamento equipamento = em.find(Equipamento.class, id, LockModeType.PESSIMISTIC_WRITE);
 
-	    Equipamento equipamento = em.find(Equipamento.class, id, LockModeType.PESSIMISTIC_WRITE);
+		if (equipamento == null) {
+			throw new ObjetoNaoEncontradoException();
+		}
 
-	    if (equipamento == null) {
-		throw new ObjetoNaoEncontradoException();
-	    }
-
-	    em.remove(equipamento);
-	} catch (RuntimeException e) {
-	    throw new InfraestruturaException(e);
+		em.remove(equipamento);
 	}
-    }
 
-    public Equipamento recuperaUmEquipamento(long id) throws ObjetoNaoEncontradoException {
-	try {
-	    EntityManager em = JPAUtil.getEntityManager();
+	public Equipamento recuperaUmEquipamento(long id) throws ObjetoNaoEncontradoException {
+		Equipamento umEquipamento = (Equipamento) em.find(Equipamento.class, new Long(id));
 
-	    Equipamento umEquipamento = (Equipamento) em.find(Equipamento.class, new Long(id));
+		if (umEquipamento == null) {
+			throw new ObjetoNaoEncontradoException();
+		}
 
-	    if (umEquipamento == null) {
-		throw new ObjetoNaoEncontradoException();
-	    }
+		return umEquipamento;
 
-	    return umEquipamento;
-	} catch (RuntimeException e) {
-	    throw new InfraestruturaException(e);
 	}
-    }
-    
-    public Equipamento recuperaUmEquipamentoComLock(long id) throws ObjetoNaoEncontradoException {
-    	try {
-    	    EntityManager em = JPAUtil.getEntityManager();
 
-    	    Equipamento umaRota = em.find(Equipamento.class, id, LockModeType.PESSIMISTIC_WRITE);
+	public Equipamento recuperaUmEquipamentoComLock(long id) throws ObjetoNaoEncontradoException {
+		Equipamento umaRota = em.find(Equipamento.class, id, LockModeType.PESSIMISTIC_WRITE);
 
-    	    if (umaRota == null) {
-    		throw new ObjetoNaoEncontradoException();
-    	    }
+		if (umaRota == null) {
+			throw new ObjetoNaoEncontradoException();
+		}
 
-    	    return umaRota;
-    	} catch (RuntimeException e) {
-    	    throw new InfraestruturaException(e);
-    	}
-        }
-    
-    public Equipamento recuperaUmEquipamentoEHabilidades(long numero) throws ObjetoNaoEncontradoException {
-    	try {
-    	    EntityManager em = JPAUtil.getEntityManager();
+		return umaRota;
+	}
 
-    	    String busca = "select e from Equipamento e left outer join fetch e.habilidades where e.id = :id";
+	public Equipamento recuperaUmEquipamentoEHabilidades(long numero) throws ObjetoNaoEncontradoException {
+		try {
+			String busca = "select e from Equipamento e left outer join fetch e.habilidades where e.id = :id";
 
-    	    Equipamento umEquipamento = (Equipamento) em.createQuery(busca).setParameter("id", numero).getSingleResult();
+			Equipamento umEquipamento = (Equipamento) em.createQuery(busca).setParameter("id", numero)
+					.getSingleResult();
 
-    	    return umEquipamento;
-    	} catch (NoResultException e) {
-    	    throw new ObjetoNaoEncontradoException();
-    	}
-        }
-    
-    @SuppressWarnings("unchecked")
-    public List<Equipamento> recuperaEquipamentosEHabilidades() {
+			return umEquipamento;
+		} catch (NoResultException e) {
+			throw new ObjetoNaoEncontradoException();
+		}
+	}
 
-	EntityManager em = JPAUtil.getEntityManager();
+	@SuppressWarnings("unchecked")
+	public List<Equipamento> recuperaEquipamentosEHabilidades() {
+		List<Equipamento> Equipamentos = em
+				.createQuery("select distinct e from Equipamento e left outer join fetch e.habilidades")
+				.getResultList();
 
-	List<Equipamento> Equipamentos = em
-		.createQuery("select distinct e from Equipamento e left outer join fetch e.habilidades")
-		.getResultList();
+		return Equipamentos;
+	}
 
-	return Equipamentos;
-    }
-	
-    
-
-    @SuppressWarnings("unchecked")
-    public List<Equipamento> recuperaEquipamento() {
-	EntityManager em = JPAUtil.getEntityManager();
-
-	return em.createQuery("select e from Equipamento e order by e.id").getResultList();
-    }
-
+	@SuppressWarnings("unchecked")
+	public List<Equipamento> recuperaEquipamento() {
+		return em.createQuery("select e from Equipamento e order by e.id").getResultList();
+	}
 
 }

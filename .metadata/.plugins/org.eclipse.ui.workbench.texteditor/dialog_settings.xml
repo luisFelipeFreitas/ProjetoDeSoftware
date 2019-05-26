@@ -2,29 +2,32 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Rota" key="selection"/>
+		<item value="Personagem" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="Lance"/>
+			<item value="Jogador"/>
+			<item value="umJogador"/>
 			<item value="Produto"/>
+			<item value="hashset"/>
+			<item value="inclui"/>
+			<item value="getSer"/>
+			<item value="autodete"/>
+			<item value="auto"/>
+			<item value="Lance"/>
 			<item value="recupera"/>
 			<item value="umRota"/>
 			<item value="lanceAppService"/>
 			<item value="valor"/>
 			<item value="produto"/>
 			<item value="umProduto"/>
-			<item value="umLance"/>
-			<item value="frota"/>
-			<item value="Frota"/>
-			<item value="frotaDAO"/>
-			<item value="frotaDao"/>
-			<item value="recuperaUmaRota"/>
-			<item value="lance"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Personagem"/>
+			<item value="umaPersonagem"/>
+			<item value="Jogador"/>
 			<item value="Rota"/>
 			<item value="Frota"/>
 			<item value="umaRota"/>

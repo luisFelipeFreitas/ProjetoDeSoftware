@@ -1,14 +1,16 @@
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import corejava.Console;
-import excecao.PersonagemNaoEncontradaException;
 import excecao.EquipamentoNaoEncontradoException;
+import excecao.PersonagemNaoEncontradaException;
 import modelo.Equipamento;
-import modelo.Personagem;
-import servico.PersonagemAppService;
-import servico.EquipamentoAppService;
-import util.Util;
 import modelo.Habilidade;
+import modelo.Personagem;
+import service.EquipamentoAppService;
+import service.PersonagemAppService;
 
 public class PrincipalEquipamento {
 	public static void main(String[] args) {
@@ -18,9 +20,11 @@ public class PrincipalEquipamento {
 
 		Equipamento umEquipamento;
 		Personagem umaPersonagem;
-
-		EquipamentoAppService equipamentoAppService = new EquipamentoAppService();
-		PersonagemAppService personagemAppService = new PersonagemAppService();
+		
+		@SuppressWarnings("resource")
+		ApplicationContext fabrica = new ClassPathXmlApplicationContext("beans-jpa.xml");
+		EquipamentoAppService equipamentoAppService = (EquipamentoAppService)fabrica.getBean ("equipamentoAppService");
+		PersonagemAppService personagemAppService = (PersonagemAppService)fabrica.getBean ("personagemAppService");
 
 		boolean continua = true;
 		while (continua) {
@@ -56,7 +60,7 @@ public class PrincipalEquipamento {
 				/* ==> */ {
 					equipamentoAppService.inclui(umEquipamento);
 
-					System.out.println('\n' + "Personagem adicionada com sucesso");
+					System.out.println('\n' + "Equipamento adicionado com sucesso");
 				} catch (PersonagemNaoEncontradaException e) {
 					System.out.println(e.getMessage());
 				}

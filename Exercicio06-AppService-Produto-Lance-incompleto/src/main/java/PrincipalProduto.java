@@ -5,7 +5,7 @@ import corejava.Console;
 import excecao.ProdutoNaoEncontradoException;
 import modelo.Lance;
 import modelo.Produto;
-import servico.ProdutoAppService;
+import servico.impl.ProdutoAppService;
 import util.Util;
 
 public class PrincipalProduto {

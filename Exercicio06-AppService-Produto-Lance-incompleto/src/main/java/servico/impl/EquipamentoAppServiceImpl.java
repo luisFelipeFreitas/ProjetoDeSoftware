@@ -13,13 +13,12 @@ import excecao.PersonagemNaoEncontradaException;
 import modelo.Equipamento;
 import modelo.Personagem;
 import service.EquipamentoAppService;
-import util.FabricaDeDAOs;
 
 public class EquipamentoAppServiceImpl implements EquipamentoAppService {
 	@Autowired
-	private static EquipamentoDAO equipamentoDAO = FabricaDeDAOs.getDAO(EquipamentoDAO.class);
+	private EquipamentoDAO equipamentoDAO;
 	@Autowired
-	private static PersonagemDAO personagemDAO = FabricaDeDAOs.getDAO(PersonagemDAO.class);
+	private PersonagemDAO personagemDAO;
 
 	@Transactional
 	public long inclui(Equipamento umEquipamento) throws PersonagemNaoEncontradaException {

@@ -13,14 +13,13 @@ import excecao.ObjetoNaoEncontradoException;
 import modelo.Equipamento;
 import modelo.Habilidade;
 import service.HabilidadeAppService;
-import util.FabricaDeDAOs;
 
 // @Service
 public class HabilidadeAppServiceImpl implements HabilidadeAppService {
 	@Autowired
-	private static HabilidadeDAO habilidadeDAO = FabricaDeDAOs.getDAO(HabilidadeDAO.class);
+	private HabilidadeDAO habilidadeDAO;
 	@Autowired
-	private static EquipamentoDAO equipamentoDAO = FabricaDeDAOs.getDAO(EquipamentoDAO.class);
+	private EquipamentoDAO equipamentoDAO;
 
 	@Transactional
 	public long inclui(Habilidade umHabilidade) throws EquipamentoNaoEncontradoException {

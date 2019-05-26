@@ -13,13 +13,12 @@ import excecao.PersonagemNaoEncontradaException;
 import modelo.Jogador;
 import modelo.Personagem;
 import service.PersonagemAppService;
-import util.FabricaDeDAOs;
 
 public class PersonagemAppServiceImpl implements PersonagemAppService {
 	@Autowired
-	private PersonagemDAO personagemDAO = FabricaDeDAOs.getDAO(PersonagemDAO.class);
+	private PersonagemDAO personagemDAO;
 	@Autowired
-	private JogadorDAO jogadorDAO = FabricaDeDAOs.getDAO(JogadorDAO.class);
+	private JogadorDAO jogadorDAO ;
 
 	@Transactional
 	public long inclui(Personagem umaPersonagem) throws JogadorNaoEncontradoException {

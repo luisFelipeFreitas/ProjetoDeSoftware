@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import dao.HabilidadeDAO;
 import excecao.ObjetoNaoEncontradoException;
 import modelo.Habilidade;
-import util.JPAUtil;
 
 @Repository
 public class HabilidadeDAOImpl implements HabilidadeDAO {
@@ -47,8 +46,7 @@ public class HabilidadeDAOImpl implements HabilidadeDAO {
 
 	public Habilidade recuperaUmaHabilidade(long id) throws ObjetoNaoEncontradoException {
 
-		EntityManager em = JPAUtil.getEntityManager();
-
+		
 		Habilidade umaHabilidade = (Habilidade) em.find(Habilidade.class, new Long(id));
 
 		if (umaHabilidade == null) {

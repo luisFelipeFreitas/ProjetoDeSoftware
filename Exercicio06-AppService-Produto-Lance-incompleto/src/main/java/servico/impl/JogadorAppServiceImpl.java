@@ -9,12 +9,11 @@ import dao.JogadorDAO;
 import excecao.JogadorNaoEncontradoException;
 import excecao.ObjetoNaoEncontradoException;
 import modelo.Jogador;
-import util.FabricaDeDAOs;
 import service.JogadorAppService;
 
 public class JogadorAppServiceImpl implements JogadorAppService{
 	@Autowired
-	private JogadorDAO jogadorDAO = FabricaDeDAOs.getDAO(JogadorDAO.class);
+	private JogadorDAO jogadorDAO ;
 
 	@Transactional
 	public long inclui(Jogador umJogador) {

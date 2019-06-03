@@ -1,4 +1,4 @@
-package service;
+package servico;
 
 import java.util.List;
 

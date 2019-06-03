@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import annotations.Perfil;
 import dao.JogadorDAO;
 import dao.PersonagemDAO;
 import excecao.JogadorNaoEncontradoException;
@@ -12,7 +13,7 @@ import excecao.ObjetoNaoEncontradoException;
 import excecao.PersonagemNaoEncontradaException;
 import modelo.Jogador;
 import modelo.Personagem;
-import service.PersonagemAppService;
+import servico.PersonagemAppService;
 
 public class PersonagemAppServiceImpl implements PersonagemAppService {
 	@Autowired
@@ -21,6 +22,7 @@ public class PersonagemAppServiceImpl implements PersonagemAppService {
 	private JogadorDAO jogadorDAO ;
 
 	@Transactional
+	@Perfil(nomes={"admin", "user"})
 	public long inclui(Personagem umaPersonagem) throws JogadorNaoEncontradoException {
 
 		try {
@@ -44,6 +46,7 @@ public class PersonagemAppServiceImpl implements PersonagemAppService {
 	}
 
 	@Transactional
+	@Perfil(nomes={"admin", "user"})
 	public void altera(Personagem umaPersonagem) throws PersonagemNaoEncontradaException {
 		try {
 
@@ -56,6 +59,7 @@ public class PersonagemAppServiceImpl implements PersonagemAppService {
 	}
 
 	@Transactional
+	@Perfil(nomes={"admin", "user"})
 	public void exclui(long numero) throws PersonagemNaoEncontradaException {
 		try {
 

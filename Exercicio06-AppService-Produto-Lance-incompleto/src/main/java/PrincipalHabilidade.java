@@ -8,8 +8,8 @@ import excecao.EquipamentoNaoEncontradoException;
 import excecao.HabilidadeNaoEncontradaException;
 import modelo.Equipamento;
 import modelo.Habilidade;
-import service.EquipamentoAppService;
-import service.HabilidadeAppService;
+import servico.EquipamentoAppService;
+import servico.HabilidadeAppService;
 
 public class PrincipalHabilidade {
 	public static void main(String[] args) {

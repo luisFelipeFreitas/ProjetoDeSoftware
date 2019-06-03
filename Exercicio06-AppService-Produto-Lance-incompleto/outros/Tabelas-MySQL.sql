@@ -14,6 +14,8 @@ DROP TABLE banco.habilidade;
 DROP TABLE banco.equipamento;
 DROP TABLE banco.personagem;
 DROP TABLE banco.jogador;
+DROP TABLE banco.usuarios;
+DROP TABLE banco.perfis;
 
 CREATE TABLE banco.produto (
   id              INT(11) NOT NULL AUTO_INCREMENT,
@@ -123,3 +125,27 @@ INSERT INTO jogador(username,senha,email) VALUES
 
 INSERT INTO personagem(nome, sexo, classe, jogador_id) VALUES
 ("Dragonborn","masculino","Fighter",1);
+
+
+CREATE TABLE banco.usuarios (
+  conta         VARCHAR(30) NOT NULL,
+  senha		       VARCHAR(50) NOT NULL,  
+  PRIMARY KEY (conta)
+)
+ENGINE = INNODB
+CHARACTER SET utf8
+COLLATE utf8_general_ci;
+
+CREATE TABLE banco.perfis (
+  id                INT(11) NOT NULL AUTO_INCREMENT,
+  conta 			VARCHAR(30) NOT NULL,
+  perfil            VARCHAR(30) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT USUARIO_PERFIL_FK 
+  FOREIGN KEY (conta)
+  REFERENCES banco.usuarios(conta) 
+  ON DELETE NO ACTION ON UPDATE RESTRICT
+)
+ENGINE = INNODB
+CHARACTER SET utf8
+COLLATE utf8_general_ci;

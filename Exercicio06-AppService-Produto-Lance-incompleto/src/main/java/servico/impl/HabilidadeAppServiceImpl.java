@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import annotations.Perfil;
 import dao.EquipamentoDAO;
 import dao.HabilidadeDAO;
 import excecao.EquipamentoNaoEncontradoException;
@@ -12,7 +13,7 @@ import excecao.HabilidadeNaoEncontradaException;
 import excecao.ObjetoNaoEncontradoException;
 import modelo.Equipamento;
 import modelo.Habilidade;
-import service.HabilidadeAppService;
+import servico.HabilidadeAppService;
 
 // @Service
 public class HabilidadeAppServiceImpl implements HabilidadeAppService {
@@ -22,6 +23,7 @@ public class HabilidadeAppServiceImpl implements HabilidadeAppService {
 	private EquipamentoDAO equipamentoDAO;
 
 	@Transactional
+	@Perfil(nomes={"admin"})
 	public long inclui(Habilidade umHabilidade) throws EquipamentoNaoEncontradoException {
 
 		try {
@@ -42,6 +44,7 @@ public class HabilidadeAppServiceImpl implements HabilidadeAppService {
 		}
 	}
 
+	@Perfil(nomes={"admin"})
 	public void exclui(long numero) throws HabilidadeNaoEncontradaException {
 		try {
 
@@ -53,6 +56,7 @@ public class HabilidadeAppServiceImpl implements HabilidadeAppService {
 		}
 	}
 
+	@Perfil(nomes={"admin"})
 	public void altera(Habilidade umaHabilidade) throws HabilidadeNaoEncontradaException {
 		try {
 			habilidadeDAO.altera(umaHabilidade);

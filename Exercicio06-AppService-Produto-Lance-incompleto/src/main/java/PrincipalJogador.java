@@ -8,7 +8,7 @@ import corejava.Console;
 import excecao.JogadorNaoEncontradoException;
 import modelo.Jogador;
 import modelo.Personagem;
-import service.JogadorAppService;
+import servico.JogadorAppService;
 
 public class PrincipalJogador {
 	public static void main(String[] args) {

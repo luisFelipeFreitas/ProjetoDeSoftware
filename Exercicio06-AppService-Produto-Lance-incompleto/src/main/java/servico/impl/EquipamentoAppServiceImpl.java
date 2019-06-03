@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import annotations.Perfil;
 import dao.EquipamentoDAO;
 import dao.PersonagemDAO;
 import excecao.EquipamentoNaoEncontradoException;
@@ -12,7 +13,7 @@ import excecao.ObjetoNaoEncontradoException;
 import excecao.PersonagemNaoEncontradaException;
 import modelo.Equipamento;
 import modelo.Personagem;
-import service.EquipamentoAppService;
+import servico.EquipamentoAppService;
 
 public class EquipamentoAppServiceImpl implements EquipamentoAppService {
 	@Autowired
@@ -21,6 +22,7 @@ public class EquipamentoAppServiceImpl implements EquipamentoAppService {
 	private PersonagemDAO personagemDAO;
 
 	@Transactional
+	@Perfil(nomes={"admin"})
 	public long inclui(Equipamento umEquipamento) throws PersonagemNaoEncontradaException {
 
 		try {
@@ -44,6 +46,7 @@ public class EquipamentoAppServiceImpl implements EquipamentoAppService {
 	}
 
 	@Transactional
+	@Perfil(nomes={"admin"})
 	public void altera(Equipamento umEquipamento) throws EquipamentoNaoEncontradoException {
 		try {
 			equipamentoDAO.altera(umEquipamento);

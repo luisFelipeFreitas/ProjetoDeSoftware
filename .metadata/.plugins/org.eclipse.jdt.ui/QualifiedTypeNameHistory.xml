@@ -10,4 +10,8 @@
 <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
 <fullyQualifiedTypeName name="dao.impl.JPADaoGenerico"/>
 <fullyQualifiedTypeName name="service.JogadorAppService"/>
+<fullyQualifiedTypeName name="org.aspectj.lang.reflect.MethodSignature"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Method"/>
+<fullyQualifiedTypeName name="annotations.Perfil"/>
+<fullyQualifiedTypeName name="modelo.SingletonPerfis"/>
 </qualifiedTypeNameHistroy>

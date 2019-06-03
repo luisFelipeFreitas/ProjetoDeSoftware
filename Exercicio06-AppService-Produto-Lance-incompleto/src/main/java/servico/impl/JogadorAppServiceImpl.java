@@ -5,17 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import annotations.Perfil;
 import dao.JogadorDAO;
 import excecao.JogadorNaoEncontradoException;
 import excecao.ObjetoNaoEncontradoException;
 import modelo.Jogador;
-import service.JogadorAppService;
+import servico.JogadorAppService;
 
 public class JogadorAppServiceImpl implements JogadorAppService{
 	@Autowired
 	private JogadorDAO jogadorDAO ;
 
 	@Transactional
+	@Perfil(nomes={"admin", "user"})
 	public long inclui(Jogador umJogador) {
 
 		// NENHUMA VALIDAÇÃO ESTÁ SENDO REALIZADA AQUI!!!
@@ -25,6 +27,7 @@ public class JogadorAppServiceImpl implements JogadorAppService{
 	}
 
 	@Transactional
+	@Perfil(nomes={"admin", "user"})
 	public void altera(Jogador umJogador) throws JogadorNaoEncontradoException {
 		try {
 
@@ -37,6 +40,7 @@ public class JogadorAppServiceImpl implements JogadorAppService{
 	}
 
 	@Transactional
+	@Perfil(nomes={"admin", "user"})
 	public void exclui(long numero) throws JogadorNaoEncontradoException {
 		try {
 

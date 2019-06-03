@@ -1205,3 +1205,39 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-06-03 15:48:05.755
+!MESSAGE The POM for corejava:console:jar:1.0 is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-06-03 15:48:09.370
+!MESSAGE The POM for corejava:console:jar:1.0 is missing, no dependency information available
+
+!ENTRY org.eclipse.jface.text 2 0 2019-06-03 15:48:22.431
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.boolean'
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-06-03 15:48:23.137
+!MESSAGE The POM for corejava:console:jar:1.0 is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-06-03 16:06:27.707
+!MESSAGE The POM for corejava:console:jar:1.0 is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-06-03 16:06:29.640
+!MESSAGE The POM for corejava:console:jar:1.0 is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-06-03 16:06:38.405
+!MESSAGE The POM for corejava:console:jar:1.0 is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-06-03 16:06:39.201
+!MESSAGE The POM for corejava:console:jar:1.0 is missing, no dependency information available
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-06-03 16:31:16.156
+!MESSAGE No repository found at http://download.eclipse.org/tools/ajdt/43/update/ajdt_2.2.3_for_eclipse_4.3.zip.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-06-03 16:31:19.567
+!MESSAGE No repository found at http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.3.jar.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-06-03 16:31:27.498
+!MESSAGE No repository found at http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.8.14-src.jar.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-06-03 16:31:32.061
+!MESSAGE No repository found at http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/dev/aspectj-DEVELOPMENT-201901140838.jar.

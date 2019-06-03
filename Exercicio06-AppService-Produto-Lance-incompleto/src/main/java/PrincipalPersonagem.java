@@ -9,8 +9,8 @@ import excecao.PersonagemNaoEncontradaException;
 import modelo.Equipamento;
 import modelo.Jogador;
 import modelo.Personagem;
-import service.JogadorAppService;
-import service.PersonagemAppService;
+import servico.JogadorAppService;
+import servico.PersonagemAppService;
 
 public class PrincipalPersonagem {
 	public static void main(String[] args) {

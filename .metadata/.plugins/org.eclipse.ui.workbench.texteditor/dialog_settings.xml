@@ -2,12 +2,14 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Habilidade" key="selection"/>
+		<item value="aspect" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="aspect"/>
+			<item value="log"/>
 			<item value="Jogador"/>
 			<item value="um"/>
 			<item value="lance"/>
@@ -21,8 +23,6 @@
 			<item value="getSer"/>
 			<item value="autodete"/>
 			<item value="auto"/>
-			<item value="Lance"/>
-			<item value="recupera"/>
 		</list>
 		<list key="replacehistory">
 			<item value="Habilidade"/>

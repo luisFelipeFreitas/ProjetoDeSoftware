@@ -2,13 +2,18 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Personagem" key="selection"/>
+		<item value="Habilidade" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
 			<item value="Jogador"/>
+			<item value="um"/>
+			<item value="lance"/>
+			<item value="Encontrada"/>
+			<item value="Personagem"/>
+			<item value="uma"/>
 			<item value="umJogador"/>
 			<item value="Produto"/>
 			<item value="hashset"/>
@@ -18,13 +23,14 @@
 			<item value="auto"/>
 			<item value="Lance"/>
 			<item value="recupera"/>
-			<item value="umRota"/>
-			<item value="lanceAppService"/>
-			<item value="valor"/>
-			<item value="produto"/>
-			<item value="umProduto"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Habilidade"/>
+			<item value="uma"/>
+			<item value="habilidade"/>
+			<item value="Encontrado"/>
+			<item value="Equipamento"/>
+			<item value="um"/>
 			<item value="Personagem"/>
 			<item value="umaPersonagem"/>
 			<item value="Jogador"/>
@@ -34,11 +40,6 @@
 			<item value="rotaAppService"/>
 			<item value="preco"/>
 			<item value="frota"/>
-			<item value="umaFrota"/>
-			<item value="rota"/>
-			<item value="rotaDAO"/>
-			<item value="Encontrada"/>
-			<item value="uma"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
